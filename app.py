@@ -17,7 +17,7 @@ try:
 except Exception as e:
     print("Error loading model:", e)
 
-st.write("I have downloaded 125 images from unsplash images.. there are certain categories which i have downloaded.. but similarly we can do it for large number of images..")
+# st.write("I have downloaded 125 images from unsplash images.. there are certain categories which i have downloaded.. but similarly we can do it for large number of images..")
 st.title("Semantic Image Search")
 st.subheader("Images are locally stored.. this is done to display images")
 st.write("Categories are: beach, mountain, plains, india, gujarat, usa, london, paris, dubai, building, food, fruit, vegetables, pizza, basketball, football, cricket, nature, travel, animals, tamil-nadu, arts-culture, people, health, wallpapers")
@@ -25,15 +25,24 @@ query = st.text_input("Search for images:")
 
 IMAGE_DIR="./images/"
 if query:
-    results = semantic_search(query, image_embeddings, processor, model, top_k=5)
+    results = semantic_search(query, image_embeddings, processor, model, top_k=4)
     st.write("Search Results:")
-    for img_name in results:
-        # img_path = f"{IMAGE_DIR}{img_name}"
+    col1, col2 = st.columns(2)
+    
+    for i, img_name in enumerate(results):
         img_path = os.path.join(IMAGE_DIR, f"image_{img_name}.jpg")
         try:
             img = Image.open(img_path)
-            # st.write(img_path)
-            st.image(img)
+            img = img.resize((200, 200))
+            if i % 2 == 0:  
+                with col1:
+                    st.image(img, use_container_width=True)
+            else:  
+                with col2:
+                    st.image(img, use_container_width=True)
+ 
+
+
         except FileNotFoundError:
             st.error(f"Image not found: {img_path}")
         except Exception as e:
