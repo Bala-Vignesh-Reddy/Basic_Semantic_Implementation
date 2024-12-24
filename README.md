@@ -1,5 +1,7 @@
 # Semantic Search (Text to Image)
 
+Link: https://basic-semantic-search.streamlit.app/
+
 This is a simple streamlit application that allows us to search for images based on text query.. the images are scraped from unsplash images.. certain categories are choosed and downloaded.. 125 images are installed locally.. 
 
 then using Open AI's CLIP model is used to generate embeddings for the downlaoded images.. and it is stored in a numpy array.. locally, then model is loaded and scikit-learn's cosine similarity is used to find the most nearest embeddings for the given query..
